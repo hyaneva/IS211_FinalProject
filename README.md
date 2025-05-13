@@ -29,3 +29,10 @@ Templates are stored in the `templates/` folder and render forms for creating an
    ```bash
    python app.py
 4. http://127.0.0.1:5000/
+5. Or go to 98hyaneva.pythonanywhere.com
+6. Log in with any of there example users:
+username=mcdavid, password=12345
+username=draisaitl, password=67890
+username=bouchard, password=24345
+username=pickard, password=12347
+username=nugent-hopkins, password=56790
