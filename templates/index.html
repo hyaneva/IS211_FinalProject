@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+<head>
+    <title>My Blog</title>
+</head>
+<body>
+    <h1>Welcome to a random Edmonton Oilers blog</h1>
+
+    {% if current_user.is_authenticated %}
+        <p>Logged in as {{ current_user.username }} | <a href="{{ url_for('routes.logout') }}">Logout</a></p>
+        <p><a href="{{ url_for('routes.dashboard') }}">View My Dashboard</a></p>
+    {% else %}
+        <p><a href="{{ url_for('routes.login') }}">Login</a></p>
+    {% endif %}
+
+    {% for post in posts %}
+        <div>
+            <h2>{{ post.title }}</h2>
+            <p>{{ post.content[:100] }}...</p>  <!-- Show a preview of the content -->
+            <small>By user {{ post.user.username }}</small>
+            <!-- Display the exact date and time -->
+            <p><small>Posted on: {{ post.created_at.strftime('%B %d, %Y %H:%M:%S') }}</small></p>
+            <p><a href="{{ url_for('routes.post', post_id=post.id) }}">View Full Post</a></p>
+        </div>
+        <hr>
+    {% endfor %}
+</body>
+</html>
+
+
+

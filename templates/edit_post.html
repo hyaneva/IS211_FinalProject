@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+<head>
+    <title>Edit Post</title>
+    <style>
+        .flash-success { color: green; }
+        .flash-error { color: red; }
+    </style>
+</head>
+<body>
+    <h1>Edit Post</h1>
+
+    <!-- Flash messages -->
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul>
+        {% for message in messages %}
+          <li class="flash-success">{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    <form method="POST">
+        <p>
+            <label for="title">Title:</label><br>
+            <input type="text" id="title" name="title" value="{{ post.title }}" placeholder="Title" required>
+        </p>
+
+        <p>
+            <label for="content">Content:</label><br>
+            <textarea id="content" name="content" placeholder="Content" required>{{ post.content }}</textarea>
+        </p>
+
+        <p>
+            <label for="category">Category:</label><br>
+            <select id="category" name="category" required>
+                <option value="">Select Category</option>
+                {% for category in categories %}
+                    <option value="{{ category.id }}" {% if post.category_id == category.id %}selected{% endif %}>
+                        {{ category.name }}
+                    </option>
+                {% endfor %}
+            </select>
+            <br>
+            <a href="{{ url_for('routes.create_category') }}">+ Create New Category</a>
+        </p>
+
+        <p><input type="submit" value="Update Post"></p>
+    </form>
+
+    <p><a href="{{ url_for('routes.dashboard') }}">Back to Dashboard</a></p>
+</body>
+</html>

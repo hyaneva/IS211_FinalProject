@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<head>
+    <title>{{ post.title }}</title>
+</head>
+<body>
+    <h1>{{ post.title }}</h1>
+    <p>{{ post.content }}</p>
+    <small>
+        By {{ post.user.username }} | {{ post.created_at }}<br>
+        Category:
+        {% if post.category %}
+            <a href="{{ url_for('routes.category', category_id=post.category.id) }}">
+
+                {{ post.category.name }}
+            </a>
+        {% else %}
+            Uncategorized
+        {% endif %}
+    </small>
+
+    <!-- Display "Back to Dashboard" button if the user is logged in -->
+    {% if current_user.is_authenticated %}
+        <p><a href="{{ url_for('routes.dashboard') }}"><button type="button">Back to Dashboard</button></a></p>
+    {% endif %}
+
+    <p><a href="{{ url_for('routes.index') }}">Back to All Posts</a></p>
+</body>
+</html>
+
+
+

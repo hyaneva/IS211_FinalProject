@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+<head>
+    <title>Dashboard</title>
+</head>
+<body>
+    <h1>Welcome to your Dashboard, {{ current_user.username }}!</h1>
+
+    <!-- Flash message display -->
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul>
+          {% for message in messages %}
+            <li style="color: green;">{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    <h2>Your Posts</h2>
+
+    <!-- Button to create a new post -->
+    <a href="{{ url_for('routes.create') }}">Add a New Post</a>
+    
+    <!-- Display posts in a table -->
+    <table border="1" cellpadding="10" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Date Created</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for post in posts %}
+            <tr>
+                <td>{{ post.title }}</td>
+                <td>{{ post.created_at.strftime('%B %d, %Y %H:%M:%S') }}</td> <!-- Display exact date and time -->
+                <td>
+                    {% if post.is_published %}
+                        Published
+                    {% else %}
+                        Unpublished
+                    {% endif %}
+                </td>
+                <td>
+                    <!-- View, Edit, Delete, Publish, and Unpublish buttons -->
+                    <a href="{{ url_for('routes.post', post_id=post.id) }}">View Post</a> | 
+                    <a href="{{ url_for('routes.edit', post_id=post.id) }}">Edit</a> | 
+                    <form action="{{ url_for('routes.delete', post_id=post.id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this post?');">
+                        <button type="submit" style="background-color: red; color: white;">Delete</button>
+                    </form> |
+                    {% if post.is_published %}
+                        <form action="{{ url_for('routes.unpublish', post_id=post.id) }}" method="POST" style="display:inline;">
+                            <button type="submit" style="background-color: orange; color: white;">Unpublish</button>
+                        </form>
+                    {% else %}
+                        <form action="{{ url_for('routes.publish', post_id=post.id) }}" method="POST" style="display:inline;">
+                            <button type="submit" style="background-color: green; color: white;">Publish</button>
+                        </form>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Button to view all posts -->
+    <p><a href="{{ url_for('routes.index') }}">View All Posts</a></p>
+
+    <p><a href="{{ url_for('routes.logout') }}">Logout</a></p>
+</body>
+</html>

@@ -1,0 +1,9 @@
+<h1>Posts in {{ category.name }} Category</h1>
+
+{% for post in posts %}
+    <div>
+        <h2><a href="{{ url_for('routes.post', post_id=post.id) }}">{{ post.title }}</a></h2>
+        <p>{{ post.content }}</p>
+    </div>
+{% endfor %}
+
