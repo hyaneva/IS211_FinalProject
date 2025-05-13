@@ -28,3 +28,4 @@ Templates are stored in the `templates/` folder and render forms for creating an
 3. Run the app using:
    ```bash
    python app.py
+4. http://127.0.0.1:5000/
