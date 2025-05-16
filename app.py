@@ -4,6 +4,7 @@ from extensions import db, login_manager
 from routes import routes 
 
 # App configuration
+# Don't ever actually hard code these secrets
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret456'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blog.db'
